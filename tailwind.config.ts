@@ -7,6 +7,12 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    colors: {
+      primary: "#10CA8B",
+      secondary: "#2F4858",
+      "dark-accent": "#3F3F46",
+      "white-light": "#D4D4D8",
+    },
     extend: {
       fontFamily: {
         kode: ["Kode Mono", "monospace"],
