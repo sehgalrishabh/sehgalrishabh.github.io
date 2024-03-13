@@ -117,6 +117,11 @@ const DotGrid: React.FC = () => {
       }
     }
     setDotPositions(positions);
+
+    // Draw initial dots with inactive color
+    for (const dotPos of positions) {
+      drawDot(dotPos.x, dotPos.y, dotPos.currentColor);
+    }
   }, [dotSpacing]);
 
   const drawDot = useCallback(
