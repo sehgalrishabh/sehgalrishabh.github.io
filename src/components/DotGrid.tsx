@@ -61,10 +61,10 @@ const DotGrid: React.FC = () => {
       // Check if the mouse position has changed
       if (mouseX !== prevMouseX || mouseY !== prevMouseY) {
         const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas!.getContext("2d");
 
         // Clear canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
         // Update dot colors based on mouse position
         updateColor(mouseX, mouseY);
         // Update previous mouse position
@@ -78,15 +78,15 @@ const DotGrid: React.FC = () => {
   // Event listener for window resize
   const handleResize = useCallback(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas!.getContext("2d");
 
     // Update canvas dimensions
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas!.width = window.innerWidth;
+    canvas!.height = window.innerHeight;
     // Recalculate dot positions
     const newPositions = [];
-    for (let i = 0; i < canvas.width; i += dotSpacing) {
-      for (let j = 0; j < canvas.height; j += dotSpacing) {
+    for (let i = 0; i < canvas!.width; i += dotSpacing) {
+      for (let j = 0; j < canvas!.height; j += dotSpacing) {
         newPositions.push({
           x: i,
           y: j,
@@ -99,40 +99,40 @@ const DotGrid: React.FC = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    if (canvas) {
+      // Set canvas dimensions
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
 
-    // Set canvas dimensions
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Calculate and store dot positions
-    const positions: { x: number; y: number; currentColor: string }[] = [];
-    for (let i = 0; i < canvas.width; i += dotSpacing) {
-      for (let j = 0; j < canvas.height; j += dotSpacing) {
-        positions.push({
-          x: i,
-          y: j,
-          currentColor: "rgba(255, 255, 255, 0.1)",
-        });
+      // Calculate and store dot positions
+      const positions: { x: number; y: number; currentColor: string }[] = [];
+      for (let i = 0; i < canvas.width; i += dotSpacing) {
+        for (let j = 0; j < canvas.height; j += dotSpacing) {
+          positions.push({
+            x: i,
+            y: j,
+            currentColor: "rgba(255, 255, 255, 0.1)",
+          });
+        }
       }
-    }
-    setDotPositions(positions);
+      setDotPositions(positions);
 
-    // Draw initial dots with inactive color
-    for (const dotPos of positions) {
-      drawDot(dotPos.x, dotPos.y, dotPos.currentColor);
+      // Draw initial dots with inactive color
+      for (const dotPos of positions) {
+        drawDot(dotPos.x, dotPos.y, dotPos.currentColor);
+      }
     }
   }, [dotSpacing]);
 
   const drawDot = useCallback(
     (x: number, y: number, color: string) => {
       const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas!.getContext("2d");
 
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(x, y, dotSize, 0, Math.PI * 2);
-      ctx.fill();
+      ctx!.fillStyle = color;
+      ctx!.beginPath();
+      ctx!.arc(x, y, dotSize, 0, Math.PI * 2);
+      ctx!.fill();
     },
     [dotSize]
   );
@@ -174,11 +174,11 @@ const DotGrid: React.FC = () => {
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     const canvas = canvasRef.current;
-    canvas.addEventListener("mousemove", handleMouseMove);
+    canvas && canvas.addEventListener("mousemove", handleMouseMove);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      canvas.removeEventListener("mousemove", handleMouseMove);
+      canvas && canvas.removeEventListener("mousemove", handleMouseMove);
     };
   }, [handleResize, handleMouseMove]);
 
