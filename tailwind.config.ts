@@ -8,10 +8,10 @@ const config: Config = {
   ],
   theme: {
     colors: {
-      primary: "#10CA8B",
-      secondary: "#2F4858",
-      "dark-accent": "#3F3F46",
-      "white-light": "#D4D4D8",
+      primary: "var(--primary)",
+      secondary: "var(--secondary)",
+      "dark-accent": "var(--dark-accent)",
+      "white-light": "var(--white-light)",
     },
     extend: {
       fontFamily: {
