@@ -17,7 +17,7 @@ const DotGrid: React.FC = () => {
   const activeDotColor = Colors.primary; // Color for updated dots
   const dotSize = 1; // Size of dots
   const dotSpacing = 24; // Spacing between dots
-  const zoomFactor = 2; // Zoom factor for active dots
+  const zoomFactor = 4; // Zoom factor for active dots
 
   // State for dot positions
   const [dotPositions, setDotPositions] = useState<
