@@ -9,7 +9,7 @@ const DotGrid: React.FC = () => {
   const dotColor = "#10CA8B"; // Color for updated dots
   const dotSize = 1; // Size of dots
   const dotSpacing = 24; // Spacing between dots
-  const transitionSpeed = 0.05; // Adjust transition speed
+  const zoomFactor = 1.5; // Zoom factor for active dots
 
   // State for dot positions
   const [dotPositions, setDotPositions] = useState<
@@ -37,19 +37,26 @@ const DotGrid: React.FC = () => {
           boxCenterY - dotPos.y
         );
 
-        // Set color based on distance
-        const color =
-          distance < dotRadius ? dotColor : "rgba(255, 255, 255, 0.1)";
-        // Calculate target color based on distance
-        const targetColor =
-          distance < dotRadius ? dotColor : "rgba(255, 255, 255, 0.1)";
-        // Transition color
-        dotPos.currentColor = transitionColor(dotPos.currentColor, targetColor);
+        // Calculate the brightness based on the distance from the center
+        // Brightness decreases linearly from 1 (maximum) at the center to 0 (minimum) at the dotRadius
+        const brightness = 1 - Math.min(distance / dotRadius, 1);
+
+        // Interpolate the color based on the brightness
+        const color = `rgba(${hexToRgb(dotColor).r}, ${hexToRgb(dotColor).g}, ${
+          hexToRgb(dotColor).b
+        }, ${brightness})`;
+
+        // Update the dot's current color
+        dotPos.currentColor = color;
+
+        // Draw dot with calculated color and apply zoom to active dots
+        const zoomedSize = dotSize * (brightness < 1 ? zoomFactor : 1);
+
         // Draw dot with calculated color
-        drawDot(dotPos.x, dotPos.y, color);
+        drawDot(dotPos.x, dotPos.y, color, zoomedSize);
       }
     },
-    [dotPositions, dotSpacing, dotRadius, dotColor]
+    [dotPositions, dotSpacing, dotRadius, dotColor, zoomFactor]
   );
 
   // Event listener for mouse movement
@@ -119,37 +126,20 @@ const DotGrid: React.FC = () => {
 
       // Draw initial dots with inactive color
       for (const dotPos of positions) {
-        drawDot(dotPos.x, dotPos.y, dotPos.currentColor);
+        drawDot(dotPos.x, dotPos.y, dotPos.currentColor, dotSize);
       }
     }
   }, [dotSpacing]);
 
   const drawDot = useCallback(
-    (x: number, y: number, color: string) => {
+    (x: number, y: number, color: string, size: number) => {
       const canvas = canvasRef.current;
       const ctx = canvas!.getContext("2d");
 
       ctx!.fillStyle = color;
       ctx!.beginPath();
-      ctx!.arc(x, y, dotSize, 0, Math.PI * 2);
+      ctx!.arc(x, y, size, 0, Math.PI * 2);
       ctx!.fill();
-    },
-    [dotSize]
-  );
-
-  const transitionColor = useCallback(
-    (currentColor: string, targetColor: string) => {
-      // Convert current color and target color to RGB format
-      const currentRGB = hexToRgb(currentColor);
-      const targetRGB = hexToRgb(targetColor);
-      // Calculate new color values by transitioning from current to target values
-      const newColor = {
-        r: transitionValue(currentRGB.r, targetRGB.r),
-        g: transitionValue(currentRGB.g, targetRGB.g),
-        b: transitionValue(currentRGB.b, targetRGB.b),
-      };
-      // Return new color in RGBA format
-      return `rgba(${newColor.r}, ${newColor.g}, ${newColor.b}, ${currentRGB.a})`;
     },
     []
   );
@@ -163,13 +153,6 @@ const DotGrid: React.FC = () => {
       a: 0.1, // Default alpha value
     };
   }, []);
-
-  const transitionValue = useCallback(
-    (currentValue: number, targetValue: number) => {
-      return currentValue + (targetValue - currentValue) * transitionSpeed;
-    },
-    [transitionSpeed]
-  );
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
