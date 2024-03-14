@@ -108,6 +108,17 @@ const DotGrid: React.FC = () => {
     [prevMouseX, prevMouseY, updateColor]
   );
 
+  // Event listener for touch movement
+  const handleTouchMove = useCallback(
+    (e: TouchEvent) => {
+      e.preventDefault(); // Prevent default touch behavior (like scrolling)
+      const touchX = e.touches[0].clientX;
+      const touchY = e.touches[0].clientY;
+      updateColor(touchX, touchY);
+    },
+    [updateColor]
+  );
+
   // Event listener for window resize
   const handleResize = useCallback(() => {
     const canvas = canvasRef.current;
@@ -192,10 +203,12 @@ const DotGrid: React.FC = () => {
     window.addEventListener("resize", handleResize);
     const canvas = canvasRef.current;
     canvas && canvas.addEventListener("mousemove", handleMouseMove);
+    canvas && canvas.addEventListener("touchmove", handleTouchMove);
 
     return () => {
       window.removeEventListener("resize", handleResize);
       canvas && canvas.removeEventListener("mousemove", handleMouseMove);
+      canvas && canvas.removeEventListener("touchmove", handleTouchMove);
     };
   }, [handleResize, handleMouseMove]);
 
