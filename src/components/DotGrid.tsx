@@ -1,15 +1,23 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useLayoutEffect,
+} from "react";
+import { Colors } from "../../tailwind.config";
 
 const DotGrid: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Define dot parameters
-  const dotRadius = 100; // Radius within which dots change color
-  const dotColor = "#10CA8B"; // Color for updated dots
+  const dotRadius = window.innerWidth / 8; // Radius within which dots change color
+  const inactiveDotColor = Colors["inactive-dots-color"]; // Color for inactive dots
+  const activeDotColor = Colors.primary; // Color for updated dots
   const dotSize = 1; // Size of dots
   const dotSpacing = 24; // Spacing between dots
-  const zoomFactor = 1.5; // Zoom factor for active dots
+  const zoomFactor = 2; // Zoom factor for active dots
 
   // State for dot positions
   const [dotPositions, setDotPositions] = useState<
@@ -19,6 +27,27 @@ const DotGrid: React.FC = () => {
   // State for previous mouse coordinates
   const [prevMouseX, setPrevMouseX] = useState<number>(-1);
   const [prevMouseY, setPrevMouseY] = useState<number>(-1);
+
+  const getBrightness = (distance: number) => {
+    // Calculate the brightness based on the distance from the center
+    // Brightness decreases linearly from 1 (maximum) at the center to 0 (minimum) at the dotRadius
+    const brightness = 1 - Math.min(distance / dotRadius, 1);
+
+    return brightness;
+  };
+
+  const calculateColor = (distance: number) => {
+    const brightness = getBrightness(distance);
+
+    if (brightness < 0.1) return inactiveDotColor;
+
+    // Interpolate the color based on the brightness
+    const color = `rgba(${hexToRgb(activeDotColor).r}, ${
+      hexToRgb(activeDotColor).g
+    }, ${hexToRgb(activeDotColor).b}, ${brightness})`;
+
+    return color;
+  };
 
   const updateColor = useCallback(
     (x: number, y: number) => {
@@ -37,26 +66,23 @@ const DotGrid: React.FC = () => {
           boxCenterY - dotPos.y
         );
 
-        // Calculate the brightness based on the distance from the center
-        // Brightness decreases linearly from 1 (maximum) at the center to 0 (minimum) at the dotRadius
-        const brightness = 1 - Math.min(distance / dotRadius, 1);
+        // Calculate target color based on distance
+        const targetColor =
+          distance < dotRadius ? calculateColor(distance) : inactiveDotColor;
 
-        // Interpolate the color based on the brightness
-        const color = `rgba(${hexToRgb(dotColor).r}, ${hexToRgb(dotColor).g}, ${
-          hexToRgb(dotColor).b
-        }, ${brightness})`;
-
-        // Update the dot's current color
-        dotPos.currentColor = color;
+        // Transition color
+        dotPos.currentColor = targetColor;
 
         // Draw dot with calculated color and apply zoom to active dots
-        const zoomedSize = dotSize * (brightness < 1 ? zoomFactor : 1);
+        const zoomedSize =
+          dotSize +
+          (zoomFactor - 1) * parseFloat(getBrightness(distance).toFixed(2));
 
         // Draw dot with calculated color
-        drawDot(dotPos.x, dotPos.y, color, zoomedSize);
+        drawDot(dotPos.x, dotPos.y, dotPos.currentColor, zoomedSize);
       }
     },
-    [dotPositions, dotSpacing, dotRadius, dotColor, zoomFactor]
+    [dotPositions, dotSpacing, dotRadius, activeDotColor]
   );
 
   // Event listener for mouse movement
@@ -104,7 +130,7 @@ const DotGrid: React.FC = () => {
     setDotPositions(newPositions);
   }, [dotPositions, dotSpacing]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
       // Set canvas dimensions
@@ -118,7 +144,7 @@ const DotGrid: React.FC = () => {
           positions.push({
             x: i,
             y: j,
-            currentColor: "rgba(255, 255, 255, 0.1)",
+            currentColor: inactiveDotColor,
           });
         }
       }
@@ -126,22 +152,30 @@ const DotGrid: React.FC = () => {
 
       // Draw initial dots with inactive color
       for (const dotPos of positions) {
-        drawDot(dotPos.x, dotPos.y, dotPos.currentColor, dotSize);
+        drawDot(dotPos.x, dotPos.y, dotPos.currentColor);
       }
     }
   }, [dotSpacing]);
 
   const drawDot = useCallback(
-    (x: number, y: number, color: string, size: number) => {
+    (x: number, y: number, color: string, size = dotSize) => {
       const canvas = canvasRef.current;
       const ctx = canvas!.getContext("2d");
+
+      // Create a glowing effect using shadow
+      ctx!.shadowBlur = dotSpacing;
+      ctx!.shadowColor = color;
 
       ctx!.fillStyle = color;
       ctx!.beginPath();
       ctx!.arc(x, y, size, 0, Math.PI * 2);
       ctx!.fill();
+
+      // Reset shadow after drawing the dot
+      ctx!.shadowBlur = 0;
+      ctx!.shadowColor = "transparent";
     },
-    []
+    [dotSize]
   );
 
   const hexToRgb = useCallback((hex: string) => {

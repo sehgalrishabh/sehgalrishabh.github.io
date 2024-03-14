@@ -12,6 +12,7 @@
   --secondary: "#2F4858";
   --dark-accent: "#3F3F46";
   --white-light: "#D4D4D8";
+  --inactive-dots-color: "rgba(255,255,255,0.1)";
 }
 
 @media (prefers-color-scheme: dark) {
