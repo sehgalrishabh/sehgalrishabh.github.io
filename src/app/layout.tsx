@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-kode">
-        {typeof window !== "undefined" && <DotGrid />}
+        <DotGrid />
         {children}
       </body>
     </html>

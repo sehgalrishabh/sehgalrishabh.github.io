@@ -12,7 +12,7 @@ const DotGrid: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Define dot parameters
-  const dotRadius = window.innerWidth / 8; // Radius within which dots change color
+  const dotRadius = window?.innerWidth / 8; // Radius within which dots change color
   const inactiveDotColor = Colors["inactive-dots-color"]; // Color for inactive dots
   const activeDotColor = Colors.primary; // Color for updated dots
   const dotSize = 1; // Size of dots
