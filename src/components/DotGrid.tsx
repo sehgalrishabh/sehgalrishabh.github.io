@@ -19,8 +19,8 @@ const DotGrid: React.FC = () => {
       : false;
   const dotRadius =
     typeof window !== "undefined"
-      ? window.innerWidth / (isPortrait ? 2 : 8)
-      : 100; // Radius within which dots change color
+      ? window.innerWidth / (isPortrait ? 4 : 8)
+      : 50; // Radius within which dots change color
   const inactiveDotColor = Colors["inactive-dots-color"]; // Color for inactive dots
   const activeDotColor = Colors.primary; // Color for updated dots
   const dotSize = 1; // Size of dots

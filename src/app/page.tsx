@@ -12,7 +12,10 @@ const Landing = () => {
         <h1 className="text-primary font-black text-2xl lg:text-4xl">
           Mobile Application Expert
         </h1>
-        <div id="social-buttons" className="mt-4 overflow-x-scroll flex">
+        <div
+          id="social-buttons"
+          className="mt-4 overflow-x-scroll flex lg:overflow-x-hidden"
+        >
           <PillButton icon={faGithub} title="Github" />
           <PillButton
             className="ms-2 lg:ms-4"
