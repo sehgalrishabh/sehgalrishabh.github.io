@@ -10,24 +10,24 @@ const useTouchEvents = (
 
   // Throttled event listener for touch movement
   const handleTouchMove = useCallback(
-    throttle((e: MouseEvent) => {
+    throttle((e: TouchEvent) => {
       if (canvasRef?.current) {
         const canvas = canvasRef.current;
 
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
+        const touchX = e.touches[0].clientX;
+        const touchY = e.touches[0].clientY;
 
         // Check if the touch position has changed
-        if (mouseX !== prevMouseX || mouseY !== prevMouseY) {
+        if (touchX !== prevMouseX || touchY !== prevMouseY) {
           // Get canvas context
           const ctx = canvas!.getContext("2d");
           // Clear canvas
           ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
           // Update dot colors based on touch position
-          updateColor(mouseX, mouseY);
+          updateColor(touchX, touchY);
           // Update previous touch position
-          setPrevMouseX(mouseX);
-          setPrevMouseY(mouseY);
+          setPrevMouseX(touchX);
+          setPrevMouseY(touchY);
         }
       }
     }, 16), // ~60fps
@@ -35,10 +35,12 @@ const useTouchEvents = (
   );
 
   useEffect(() => {
-    window.addEventListener("touchmove", handleTouchMove, {
-      passive: false,
-    });
-
+    const canvas = canvasRef.current;
+    if (canvas) {
+      window.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      });
+    }
     return () => {
       window.removeEventListener("touchmove", handleTouchMove);
     };

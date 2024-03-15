@@ -35,8 +35,10 @@ const useMouseEvents = (
   );
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-
+    const canvas = canvasRef.current;
+    if (canvas) {
+      window.addEventListener("mousemove", handleMouseMove);
+    }
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };

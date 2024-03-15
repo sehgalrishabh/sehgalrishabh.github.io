@@ -33,8 +33,10 @@ const useWindowResize = (
   );
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
+    const canvas = canvasRef.current;
+    if (canvas) {
+      window.addEventListener("resize", handleResize);
+    }
     return () => {
       window.removeEventListener("resize", handleResize);
     };
