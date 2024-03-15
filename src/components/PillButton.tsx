@@ -12,7 +12,7 @@ const PillButton = ({
 }) => {
   return (
     <button
-      className={`bg-dark-accent hover:bg-primary transition-colors py-2 px-4 rounded-full${
+      className={`flex items-center bg-dark-accent hover:bg-primary transition-colors py-2 px-4 rounded-full${
         className ? " " + className : ""
       }`}
     >

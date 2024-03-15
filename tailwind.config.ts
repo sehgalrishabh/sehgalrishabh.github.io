@@ -18,11 +18,11 @@ const config: Config = {
   ],
   theme: {
     colors: {
-      primary: "var(--primary)",
-      secondary: "var(--secondary)",
-      "dark-accent": "var(--dark-accent)",
-      "white-light": "var(--white-light)",
-      "inactive-dots-color": "var(--inactive-dots-color)",
+      primary: Colors.primary,
+      secondary: Colors.secondary,
+      "dark-accent": Colors["dark-accent"],
+      "white-light": Colors["white-light"],
+      "inactive-dots-color": Colors["inactive-dots-color"],
     },
     extend: {
       fontFamily: {

@@ -7,12 +7,20 @@ import React, {
   useLayoutEffect,
 } from "react";
 import { Colors } from "../../tailwind.config";
+import { throttle, debounce } from "lodash";
 
 const DotGrid: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Define dot parameters
-  const dotRadius = typeof window !== "undefined" ? window.innerWidth / 8 : 100; // Radius within which dots change color
+  const isPortrait =
+    typeof window !== "undefined"
+      ? window.innerWidth < window.innerHeight
+      : false;
+  const dotRadius =
+    typeof window !== "undefined"
+      ? window.innerWidth / (isPortrait ? 2 : 8)
+      : 100; // Radius within which dots change color
   const inactiveDotColor = Colors["inactive-dots-color"]; // Color for inactive dots
   const activeDotColor = Colors.primary; // Color for updated dots
   const dotSize = 1; // Size of dots
@@ -85,44 +93,42 @@ const DotGrid: React.FC = () => {
     [dotPositions, dotSpacing, dotRadius, activeDotColor]
   );
 
+  // Throttled event listeners
+  const throttledMouseMove = throttle(handleMouseMove, 16); // ~60fps
+  const throttledTouchMove = throttle(handleTouchMove, 16); // ~60fps
+  const debouncedResize = debounce(handleResize, 200); // Resize optimization
+
   // Event listener for mouse movement
-  const handleMouseMove = useCallback(
-    (e: MouseEvent) => {
-      const mouseX = e.clientX;
-      const mouseY = e.clientY;
+  function handleMouseMove(e: MouseEvent) {
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
 
-      // Check if the mouse position has changed
-      if (mouseX !== prevMouseX || mouseY !== prevMouseY) {
-        const canvas = canvasRef.current;
-        const ctx = canvas!.getContext("2d");
+    // Check if the mouse position has changed
+    if (mouseX !== prevMouseX || mouseY !== prevMouseY) {
+      const canvas = canvasRef.current;
+      const ctx = canvas!.getContext("2d");
 
-        // Clear canvas
-        ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
-        // Update dot colors based on mouse position
-        updateColor(mouseX, mouseY);
-        // Update previous mouse position
-        setPrevMouseX(mouseX);
-        setPrevMouseY(mouseY);
-      }
-    },
-    [prevMouseX, prevMouseY, updateColor]
-  );
+      // Clear canvas
+      ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+      // Update dot colors based on mouse position
+      updateColor(mouseX, mouseY);
+      // Update previous mouse position
+      setPrevMouseX(mouseX);
+      setPrevMouseY(mouseY);
+    }
+  }
 
   // Event listener for touch movement
-  const handleTouchMove = useCallback(
-    (e: TouchEvent) => {
-      e.preventDefault(); // Prevent default touch behavior (like scrolling)
-      const touchX = e.touches[0].clientX;
-      const touchY = e.touches[0].clientY;
-      updateColor(touchX, touchY);
-    },
-    [updateColor]
-  );
+  function handleTouchMove(e: TouchEvent) {
+    e.preventDefault(); // Prevent default touch behavior (like scrolling)
+    const touchX = e.touches[0].clientX;
+    const touchY = e.touches[0].clientY;
+    updateColor(touchX, touchY);
+  }
 
   // Event listener for window resize
-  const handleResize = useCallback(() => {
+  function handleResize() {
     const canvas = canvasRef.current;
-    const ctx = canvas!.getContext("2d");
 
     // Update canvas dimensions
     canvas!.width = window.innerWidth;
@@ -139,7 +145,7 @@ const DotGrid: React.FC = () => {
       }
     }
     setDotPositions(newPositions);
-  }, [dotPositions, dotSpacing]);
+  }
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current;
@@ -200,17 +206,16 @@ const DotGrid: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    const canvas = canvasRef.current;
-    canvas && canvas.addEventListener("mousemove", handleMouseMove);
-    canvas && canvas.addEventListener("touchmove", handleTouchMove);
+    window.addEventListener("resize", debouncedResize);
+    window.addEventListener("mousemove", throttledMouseMove);
+    window.addEventListener("touchmove", throttledTouchMove);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      canvas && canvas.removeEventListener("mousemove", handleMouseMove);
-      canvas && canvas.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("resize", debouncedResize);
+      window.removeEventListener("mousemove", throttledMouseMove);
+      window.removeEventListener("touchmove", throttledTouchMove);
     };
-  }, [handleResize, handleMouseMove]);
+  }, [debouncedResize, throttledMouseMove, throttledTouchMove]);
 
   return <canvas ref={canvasRef} />;
 };
