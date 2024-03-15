@@ -35,10 +35,12 @@ const useTouchEvents = (
   );
 
   useEffect(() => {
-    window.addEventListener("touchmove", handleTouchMove, {
-      passive: false,
-    });
-
+    const canvas = canvasRef.current;
+    if (canvas) {
+      window.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      });
+    }
     return () => {
       window.removeEventListener("touchmove", handleTouchMove);
     };
