@@ -22,6 +22,34 @@ const DotGrid: React.FC = () => {
     { x: number; y: number; currentColor: string }[]
   >([]);
 
+  const [prevXY, setPrevXY] = useState<{ x: number; y: number }>({
+    x: -1,
+    y: -1,
+  });
+
+  // Update dot positions and colors based on mouse or touch coordinates
+  function updatePosition(x: number, y: number) {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const mouseXChanged = x !== prevXY.x;
+    const mouseYChanged = y !== prevXY.y;
+
+    // Check if the mouse position has changed
+    if (mouseXChanged || mouseYChanged) {
+      const ctx = canvas.getContext("2d");
+
+      // Clear canvas
+      ctx!.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update dot colors based on mouse position
+      updateColor(x, y);
+
+      // Update previous mouse position
+      setPrevXY({ x, y });
+    }
+  }
+
   const updateColor = useCallback(
     (x: number, y: number) => {
       for (const dotPos of dotPositions) {
@@ -48,8 +76,7 @@ const DotGrid: React.FC = () => {
 
         // Draw dot with calculated color and apply zoom to active dots
         const zoomedSize =
-          dotSize +
-          (zoomFactor - 1) * parseFloat(getBrightness(distance).toFixed(2));
+          dotSize * (1 + (zoomFactor - 1) * getBrightness(distance));
 
         // Draw dot with calculated color
         drawDot(dotPos.x, dotPos.y, dotPos.currentColor, zoomedSize);
@@ -80,8 +107,8 @@ const DotGrid: React.FC = () => {
   );
 
   useWindowResize(dotPositions, setDotPositions, canvasRef);
-  useMouseEvents(updateColor, canvasRef);
-  useTouchEvents(updateColor, canvasRef);
+  useMouseEvents(updatePosition, canvasRef);
+  useTouchEvents(updatePosition, canvasRef);
   useCanvas(setDotPositions, drawDot, canvasRef);
 
   return <canvas ref={canvasRef} />;
