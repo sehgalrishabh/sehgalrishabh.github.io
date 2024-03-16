@@ -28,7 +28,7 @@ const DotGrid: React.FC = () => {
   });
 
   // Update dot positions and colors based on mouse or touch coordinates
-  function updatePosition(x: number, y: number) {
+  const updatePosition = (x: number, y: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -48,7 +48,7 @@ const DotGrid: React.FC = () => {
       // Update previous mouse position
       setPrevXY({ x, y });
     }
-  }
+  };
 
   const updateColor = useCallback(
     (x: number, y: number) => {
@@ -82,7 +82,7 @@ const DotGrid: React.FC = () => {
         drawDot(dotPos.x, dotPos.y, dotPos.currentColor, zoomedSize);
       }
     },
-    [dotPositions, dotSpacing, dotRadius, activeDotColor]
+    [dotPositions]
   );
 
   const drawDot = useCallback(
@@ -103,7 +103,7 @@ const DotGrid: React.FC = () => {
       ctx!.shadowBlur = 0;
       ctx!.shadowColor = "transparent";
     },
-    [dotSize]
+    []
   );
 
   useWindowResize(dotPositions, setDotPositions, canvasRef);
