@@ -13,7 +13,7 @@ const useTouchEvents = (
 
       // Check if the touch position has changed
       updatePosition(touchX, touchY);
-    }, 16), // ~60fps
+    }, 33.33), // ~30fps (1000 milliseconds/ desired fps = delay in milliseconds)
     [updatePosition]
   );
 

@@ -17,6 +17,9 @@ export const getBrightness = (distance: number) => {
   return Math.max(0, 1 - Math.pow(distance / dotRadius, 2));
 };
 
+const rgba = hexToRgb(activeDotColor);
+const hsl = rgb.hsl(rgba.r, rgba.g, rgba.b);
+
 export const calculateColor = (distance: number) => {
   const brightness = getBrightness(distance);
 
@@ -28,8 +31,6 @@ export const calculateColor = (distance: number) => {
   // }, ${hexToRgb(activeDotColor).b}, ${brightness})`;
 
   // Adjust hue, saturation, and lightness to enhance visibility
-  const rgba = hexToRgb(activeDotColor);
-  const hsl = rgb.hsl(rgba.r, rgba.g, rgba.b);
   const hue = hsl[0]; // Adjust hue to your preference
   const saturation = 100; // Maximum saturation for punchy flavor
   const lightness = 50 + brightness; // Scale lightness based on brightness
