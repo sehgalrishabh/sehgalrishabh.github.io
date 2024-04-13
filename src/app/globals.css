@@ -4,40 +4,34 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 24, 24, 27;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: rgb(24, 24, 27);
+  --background-start-rgb: rgb(214, 219, 220);
+  --background-end-rgb: rgb(255, 255, 255);
   /* THEME COLORS */
-  --primary: "#10CA8B";
-  --secondary: "#2F4858";
-  --dark-accent: "#3F3F46";
-  --white-light: "#D4D4D8";
-  --inactive-dots-color: "rgba(255,255,255,0.1)";
+  --primary: #10ca8b;
+  --secondary: #2f4858;
+  --dark-accent: #3f3f46;
+  --white-light: #d4d4d8;
+  --inactive-dots-color: rgba(255, 255, 255, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 24, 24, 27;
-    --background-end-rgb: 24, 24, 27;
+    --foreground-rgb: rgb(255, 255, 255);
+    --background-start-rgb: rgb(24, 24, 27);
+    --background-end-rgb: rgb(24, 24, 27);
   }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--foreground-rgb);
+  background: linear-gradient(to bottom, transparent, var(--background-end-rgb))
+    var(--background-start-rgb);
   position: relative;
 }
 
 canvas {
   position: fixed;
-  width: 100%;
-  height: 100%;
   z-index: -1;
 }
 
@@ -51,6 +45,83 @@ main {
 section {
   position: relative;
 }
+
+/* TIMELINE */
+.timeline {
+  position: relative;
+  margin: 0 auto;
+  width: 90%;
+}
+.timeline ul li {
+  margin-bottom: 50px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.point {
+  min-width: 16px;
+  height: 16px;
+  background-color: var(--white-light);
+  border-radius: 100%;
+  position: relative;
+  left: 0.5px;
+}
+.timeline ul li .content {
+  width: 50%;
+}
+.timeline ul li:nth-child(odd) .content {
+  padding-left: 0;
+}
+.timeline ul li:nth-child(odd) .date {
+  padding-right: 0;
+}
+.timeline ul li:nth-child(even) .content {
+  padding-right: 0;
+}
+.timeline ul li:nth-child(even) .date {
+  padding-left: 0;
+}
+.timeline ul li .date {
+  width: 50%;
+  font-weight: normal;
+}
+.timeline ul li .date h4 {
+  /* background-color: black;  Add Background Color To Date  */
+  text-align: center;
+  padding: 5px 10px;
+}
+.timeline ul li .content h3 {
+  padding: 0px 20px;
+  /* background-color: black;  Add Background Color To Card Header  */
+  margin-bottom: 0;
+  text-align: center;
+}
+.timeline ul li .content p {
+  padding: 0px 20px;
+  /* background-color: black;  Add Background Color To Card Body  */
+  margin-top: 0;
+  text-align: center;
+}
+.timeline ul li .date h4 {
+  float: right;
+}
+/* .timeline ul li:nth-child(even) {
+  flex-direction: row-reverse;
+} */
+/* .timeline ul li:nth-child(even) .date h4 {
+  float: right;
+} */
+.timeline::before {
+  content: "";
+  position: absolute;
+  bottom: calc(25px + 8px);
+  height: calc(100% - 25px - 25px);
+  width: 1px;
+  left: 50%;
+  background-color: var(--white-light);
+}
+/* TIMELINE END*/
 
 @layer utilities {
   .text-balance {
