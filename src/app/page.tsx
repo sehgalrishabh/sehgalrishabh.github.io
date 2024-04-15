@@ -4,6 +4,29 @@ import { faEnvelope, faBriefcase } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Landing = () => {
+  const experience = [
+    {
+      date: "July 2022",
+      org: "Infosys",
+      designation: "Mobile Application Developer",
+    },
+    {
+      date: "Sep 2021",
+      org: "RowthTech (Pvt) Ltd",
+      designation: "Mobile Application Developer / Team Lead",
+    },
+    {
+      date: "Feb 2021",
+      org: "Suffescom Solutions Pvt. Ltd",
+      designation: "React Native Developer",
+    },
+    {
+      date: "June 2019",
+      org: "AppsMaven",
+      designation: "Android Developer / React Native Developer",
+    },
+  ];
+
   return (
     <main className="flex min-h-screen flex-col py-16 items-center px-4 lg:px-0">
       <section className="w-full lg:w-1/2">
@@ -41,55 +64,22 @@ const Landing = () => {
 
         <div className="timeline">
           <ul>
-            <li>
-              <div className="date">
-                <h4>July 2022</h4>
-              </div>
-              <div className="point" />
-              <div className="content">
-                <h3>
-                  <FontAwesomeIcon icon={faBriefcase} /> Infosys
-                </h3>
-                <p>Mobile Application Developer</p>
-              </div>
-            </li>
-            <li>
-              <div className="date">
-                <h4>Sep 2021</h4>
-              </div>
-              <div className="point" />
-              <div className="content">
-                <h3>
-                  <FontAwesomeIcon icon={faBriefcase} /> RowthTech (Pvt) Ltd
-                </h3>
-                <p>Mobile Application Developer / Team Lead</p>
-              </div>
-            </li>
-            <li>
-              <div className="date">
-                <h4>Feb 2019</h4>
-              </div>
-              <div className="point" />
-              <div className="content">
-                <h3>
-                  <FontAwesomeIcon icon={faBriefcase} /> Suffescom Solutions
-                  Pvt. Ltd
-                </h3>
-                <p>React Native Developer</p>
-              </div>
-            </li>
-            <li>
-              <div className="date">
-                <h4>June 2019</h4>
-              </div>
-              <div className="point" />
-              <div className="content">
-                <h3>
-                  <FontAwesomeIcon icon={faBriefcase} /> AppsMaven
-                </h3>
-                <p>Android Developer / React Native Developer</p>
-              </div>
-            </li>
+            {experience.map((item, index) => {
+              return (
+                <li key={index}>
+                  <div className="date">
+                    <h4>{item.date}</h4>
+                  </div>
+                  <div className="point" />
+                  <div className="content">
+                    <h3>
+                      <FontAwesomeIcon icon={faBriefcase} /> {item.org}
+                    </h3>
+                    <p>{item.designation}</p>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>

@@ -89,19 +89,24 @@ section {
 .timeline ul li .date h4 {
   /* background-color: black;  Add Background Color To Date  */
   text-align: center;
-  padding: 5px 10px;
+  padding: 5px 16px;
+}
+
+.timeline ul li .content h3 > svg {
+  color: var(--white-light);
 }
 .timeline ul li .content h3 {
-  padding: 0px 20px;
+  padding: 0px 16px;
   /* background-color: black;  Add Background Color To Card Header  */
   margin-bottom: 0;
-  text-align: center;
+  text-align: left;
+  color: var(--white-light);
 }
 .timeline ul li .content p {
-  padding: 0px 20px;
+  padding: 0px 16px;
   /* background-color: black;  Add Background Color To Card Body  */
   margin-top: 0;
-  text-align: center;
+  text-align: left;
 }
 .timeline ul li .date h4 {
   float: right;
