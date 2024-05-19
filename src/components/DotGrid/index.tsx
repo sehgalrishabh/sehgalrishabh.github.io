@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import {
   activeDotColor,
   dotRadius,
@@ -27,29 +27,29 @@ const DotGrid: React.FC = () => {
     y: -1,
   });
 
-  // Update dot positions and colors based on mouse or touch coordinates
-  const updatePosition = (x: number, y: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+  // Function to draw a dot on the canvas
+  const drawDot = useCallback(
+    (x: number, y: number, color: string, size = dotSize) => {
+      const canvas = canvasRef.current;
+      const ctx = canvas!.getContext("2d");
 
-    const mouseXChanged = x !== prevXY.x;
-    const mouseYChanged = y !== prevXY.y;
+      // Create a glowing effect using shadow
+      ctx!.shadowBlur = dotSpacing;
+      ctx!.shadowColor = color;
 
-    // Check if the mouse position has changed
-    if (mouseXChanged || mouseYChanged) {
-      const ctx = canvas.getContext("2d");
+      ctx!.fillStyle = color;
+      ctx!.beginPath();
+      ctx!.arc(x, y, size, 0, Math.PI * 2);
+      ctx!.fill();
 
-      // Clear canvas
-      ctx!.clearRect(0, 0, canvas.width, canvas.height);
+      // Reset shadow after drawing the dot
+      ctx!.shadowBlur = 0;
+      ctx!.shadowColor = "transparent";
+    },
+    []
+  );
 
-      // Update dot colors based on mouse position
-      updateColor(x, y);
-
-      // Update previous mouse position
-      setPrevXY({ x, y });
-    }
-  };
-
+  // Update dot colors based on distance from mouse or touch position
   const updateColor = useCallback(
     (x: number, y: number) => {
       for (const dotPos of dotPositions) {
@@ -82,36 +82,62 @@ const DotGrid: React.FC = () => {
         drawDot(dotPos.x, dotPos.y, dotPos.currentColor, zoomedSize);
       }
     },
-    [dotPositions]
+    [dotPositions, drawDot]
   );
 
-  const drawDot = useCallback(
-    (x: number, y: number, color: string, size = dotSize) => {
+  // Update dot positions and colors based on mouse or touch coordinates
+  const updatePosition = useCallback(
+    (x: number, y: number) => {
       const canvas = canvasRef.current;
-      const ctx = canvas!.getContext("2d");
+      if (!canvas) return;
 
-      // Create a glowing effect using shadow
-      ctx!.shadowBlur = dotSpacing;
-      ctx!.shadowColor = color;
+      const mouseXChanged = x !== prevXY.x;
+      const mouseYChanged = y !== prevXY.y;
 
-      ctx!.fillStyle = color;
-      ctx!.beginPath();
-      ctx!.arc(x, y, size, 0, Math.PI * 2);
-      ctx!.fill();
+      // Check if the mouse position has changed
+      if (mouseXChanged || mouseYChanged) {
+        const ctx = canvas.getContext("2d");
 
-      // Reset shadow after drawing the dot
-      ctx!.shadowBlur = 0;
-      ctx!.shadowColor = "transparent";
+        // Clear canvas
+        ctx!.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Update dot colors based on mouse position
+        updateColor(x, y);
+
+        // Update previous mouse position
+        setPrevXY({ x, y });
+      }
     },
-    []
+    [prevXY, updateColor]
   );
+
+  // Adjust the canvas size to handle high DPI screens
+  const adjustCanvasSize = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      const ratio = window.devicePixelRatio || 1;
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+
+      // Scale the drawing context to handle high DPI
+      ctx && ctx.scale(ratio, ratio);
+    }
+  }, []);
+
+  useEffect(() => {
+    adjustCanvasSize();
+  }, [adjustCanvasSize]);
 
   useWindowResize(dotPositions, setDotPositions, canvasRef);
   useMouseEvents(updatePosition, canvasRef);
   useTouchEvents(updatePosition, canvasRef);
   useCanvas(setDotPositions, drawDot, canvasRef);
-
-  return <canvas ref={canvasRef} width={"100%"} height={"100%"} />;
+  
+  return <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />;
 };
 
 export default DotGrid;
