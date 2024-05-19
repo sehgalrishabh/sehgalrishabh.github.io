@@ -111,27 +111,6 @@ const DotGrid: React.FC = () => {
     [prevXY, updateColor]
   );
 
-  // Adjust the canvas size to handle high DPI screens
-  const adjustCanvasSize = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const ctx = canvas.getContext("2d");
-      const ratio = window.devicePixelRatio || 1;
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-
-      canvas.width = width * ratio;
-      canvas.height = height * ratio;
-
-      // Scale the drawing context to handle high DPI
-      ctx && ctx.scale(ratio, ratio);
-    }
-  }, []);
-
-  useEffect(() => {
-    adjustCanvasSize();
-  }, [adjustCanvasSize]);
-
   useWindowResize(dotPositions, setDotPositions, canvasRef);
   useMouseEvents(updatePosition, canvasRef);
   useTouchEvents(updatePosition, canvasRef);
