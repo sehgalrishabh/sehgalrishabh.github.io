@@ -115,7 +115,7 @@ const DotGrid: React.FC = () => {
   useMouseEvents(updatePosition, canvasRef);
   useTouchEvents(updatePosition, canvasRef);
   useCanvas(setDotPositions, drawDot, canvasRef);
-
+  
   return <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />;
 };
 
