@@ -59,6 +59,9 @@ section {
   flex-direction: row;
   align-items: center;
 }
+li:first-child .point {
+  background-color: #f44336;
+}
 .point {
   min-width: 16px;
   height: 16px;
