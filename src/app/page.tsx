@@ -2,6 +2,7 @@ import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import PillButton from "@/components/PillButton";
 import { faEnvelope, faBriefcase } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 
 const Landing = () => {
   const experience = [
@@ -40,17 +41,31 @@ const Landing = () => {
           id="social-buttons"
           className="mt-4 overflow-x-scroll flex lg:overflow-x-hidden"
         >
-          <PillButton icon={faGithub} title="Github" />
-          <PillButton
-            className="ms-2 lg:ms-4"
-            icon={faLinkedin}
-            title="LinkedIn"
-          />
-          <PillButton
-            className="ms-2 lg:ms-4"
-            icon={faEnvelope}
-            title="Email"
-          />
+          <Link
+            href={"https://github.com/sehgalrishabh/"}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <PillButton icon={faGithub} title="Github" />
+          </Link>
+          <Link
+            href={"https://www.linkedin.com/in/rshbhshgl/"}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <PillButton
+              className="ms-2 lg:ms-4"
+              icon={faLinkedin}
+              title="LinkedIn"
+            />
+          </Link>
+          <Link href={"mailto:rishabbh004@gmail.com"}>
+            <PillButton
+              className="ms-2 lg:ms-4"
+              icon={faEnvelope}
+              title="Email"
+            />
+          </Link>
         </div>
         <p id="about" className="mt-4 text-white-light">
           I&apos;m a software developer with a problem solving attitude. I am
