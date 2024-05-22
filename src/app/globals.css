@@ -130,7 +130,16 @@ li:first-child .point {
   background-color: var(--white-light);
 }
 /* TIMELINE END*/
+/* Hide scrollbar for Chrome, Safari and Opera */
+.showcase::-webkit-scrollbar {
+  display: none;
+}
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.showcase {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;

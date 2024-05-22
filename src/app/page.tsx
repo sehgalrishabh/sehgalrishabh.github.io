@@ -76,7 +76,6 @@ const Landing = () => {
       </section>
       <section className="w-full lg:w-1/2">
         <strong className="text-xl lg:text-2xl">My Timeline</strong>
-
         <div className="timeline">
           <ul>
             {experience.map((item, index) => {
@@ -97,6 +96,24 @@ const Landing = () => {
             })}
           </ul>
         </div>
+      </section>
+      <section className="w-full lg:w-1/2">
+        <ul className="showcase overflow-x-auto flex">
+          {Array.from({ length: 10 }).map((item, index) => {
+            return (
+              <li key={index} className={`w-1/2 flex-shrink-0 p-4`}>
+                <div className="bg-dark-accent rounded-lg shadow-md p-4">
+                  <h2 className="text-xl font-bold">Card 3</h2>
+                  <p className="mt-2">
+                    This is the content of card 3. This is the content of card
+                    3. This is the content of card 3. This is the content of
+                    card 3. This is the content of card 3.
+                  </p>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </section>
     </main>
   );
