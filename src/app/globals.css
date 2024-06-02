@@ -140,6 +140,56 @@ li:first-child .point {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+.showcase::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* .showcase::before,
+.showcase::after {
+  --gradient-start: rgb(24, 24, 27);
+  content: "";
+  height: 100%;
+  width: 10%;
+  display: block;
+  position: absolute;
+  background: var(--gradient-start);
+}
+
+.showcase::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    var(--gradient-start) 0%,
+    transparent 100%
+  );
+}
+
+.showcase::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    var(--gradient-start) 0%,
+    transparent 100%
+  );
+} */
+
+/* List items */
+.showcase > li {
+  height: 200px; /* Initial height */
+  transition: all 0.3s ease;
+}
+
+.showcase > li:hover {
+  height: auto;
+}
+.showcase > li:hover .bg-dark-accent {
+  background: var(--secondary);
+}
+
+.showcase > li:hover .additional-data {
+  display: block; /* Display additional data */
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

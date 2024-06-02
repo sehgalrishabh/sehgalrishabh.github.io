@@ -1,8 +1,16 @@
+"use client";
+import React from "react";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import PillButton from "@/components/PillButton";
-import { faEnvelope, faBriefcase } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faBriefcase,
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import projects from "../data/projects.json";
 
 const Landing = () => {
   const experience = [
@@ -69,8 +77,8 @@ const Landing = () => {
         </div>
         <p id="about" className="mt-4 text-white-light">
           I&apos;m a software developer with a problem solving attitude. I am
-          focused to provide maximum productivity with minimal efforts and open
-          to learning new technologies with changing times.
+          focused to provide maximum productivity with minimal efforts and keen
+          to learn new technologies with changing times.
         </p>
         <hr className="my-4 text-white-light" />
       </section>
@@ -98,22 +106,37 @@ const Landing = () => {
         </div>
       </section>
       <section className="w-full lg:w-1/2">
-        <ul className="showcase overflow-x-auto flex">
-          {Array.from({ length: 10 }).map((item, index) => {
-            return (
-              <li key={index} className={`w-1/2 flex-shrink-0 p-4`}>
-                <div className="bg-dark-accent rounded-lg shadow-md p-4">
-                  <h2 className="text-xl font-bold">Card 3</h2>
-                  <p className="mt-2">
-                    This is the content of card 3. This is the content of card
-                    3. This is the content of card 3. This is the content of
-                    card 3. This is the content of card 3.
-                  </p>
+        <div className="flex flex-row">
+          <span className="-ml-[32px] p-[16px] cursor-pointer mt-[68px]">
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </span>
+          {/* Projects List */}
+          <ul className="showcase overflow-x-scroll flex space-x-4 relative">
+            {projects.map((item, index) => (
+              <li
+                key={index}
+                className="flex-shrink-0 w-1/2 p-4 cursor-pointer transition-all duration-300 transform"
+              >
+                <div className="bg-dark-accent rounded-lg shadow-md p-4 h-full overflow-hidden transition-all duration-300">
+                  <h2 className="text-xl font-bold">{item.title}</h2>
+                  <p className="mt-2 line-clamp-3">{item.desc}</p>
+                  <div className="additional-data mt-2 hidden">
+                    <p>
+                      {item.desc} {item.desc} {item.desc}
+                      {item.desc} {item.desc} {item.desc}
+                      {item.desc} {item.desc} {item.desc}
+                      {item.desc} {item.desc} {item.desc}
+                      {item.desc} {item.desc} {item.desc}
+                    </p>
+                  </div>
                 </div>
               </li>
-            );
-          })}
-        </ul>
+            ))}
+          </ul>
+          <span className="-mr-[32px] p-[16px] cursor-pointer mt-[68px]">
+            <FontAwesomeIcon icon={faChevronRight} />
+          </span>
+        </div>
       </section>
     </main>
   );
