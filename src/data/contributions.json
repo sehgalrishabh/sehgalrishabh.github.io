@@ -1,0 +1,24 @@
+[
+  {
+    "title": "Dynamic Grid View",
+    "desc": "Flutter library to use GridView inside SingleChildScrollView without fixed height (i.e., using dynamic height based on elements).",
+    "link": "https://pub.dev/packages/dynamic_grid_view"
+  },
+  {
+    "title": "Okta React Native Web",
+    "desc": "okta-react-native-web is a comprehensive package designed to integrate Okta authentication seamlessly into your React Native Web applications using the okta-auth-js SDK. This wrapper simplifies the implementation of Okta's authentication and authorization functionalities, ensuring a smooth and secure user authentication flow for web platforms using react-native-web.",
+    "link": "https://www.npmjs.com/package/okta-react-native-web",
+    "doc": "https://sehgalrishabh.github.io/okta-react-native-web/docs/intro/"
+  },
+  {
+    "title": "React Native Enhancer",
+    "desc": "A comprehensive utility library for ReactNative development, providing essential helper methods and tools in one cohesive package.",
+    "link": "https://www.npmjs.com/package/react-native-enhancer",
+    "doc": "https://sehgalrishabh.github.io/react-native-enhancer/docs/intro"
+  },
+  {
+    "title": "Flutter Vault",
+    "desc": "flutter_vault is a Dart library containing common utility classes and functions for Flutter app development. It aims to simplify common tasks and streamline the development process by providing reusable and well-tested utility functions.",
+    "link": "https://pub.dev/packages/flutter_vault"
+  }
+]
