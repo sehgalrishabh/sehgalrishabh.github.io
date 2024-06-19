@@ -1,8 +1,17 @@
+"use client";
+import React from "react";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import PillButton from "@/components/PillButton";
-import { faEnvelope, faBriefcase } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faBriefcase,
+  faLink,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import projects from "../data/projects.json";
+import contributions from "../data/contributions.json";
+import TechnologiesWrapper from "@/components/TechnologiesWrapper";
 
 const Landing = () => {
   const experience = [
@@ -28,6 +37,97 @@ const Landing = () => {
     },
   ];
 
+  const technologies = [
+    {
+      image: "../assets/android.png",
+      title: "Android",
+    },
+    {
+      image: "../assets/angular.png",
+      title: "Angular",
+    },
+    {
+      image: "../assets/aws.png",
+      title: "Amazon Web Services",
+    },
+    {
+      image: "../assets/azure.png",
+      title: "Microsoft Azure",
+    },
+    {
+      image: "../assets/bootstrap.png",
+      title: "Bootstrap",
+    },
+    {
+      image: "../assets/es-ecmascript-logo.png",
+      title: "ES",
+    },
+    {
+      image: "../assets/firebase.png",
+      title: "Firebase",
+    },
+    {
+      image: "../assets/Flutter.png",
+      title: "Flutter",
+    },
+    {
+      image: "../assets/google-cloud.png",
+      title: "Google Cloud",
+    },
+    {
+      image: "../assets/graphql.png",
+      title: "GraphlQL",
+    },
+    {
+      image: "../assets/javascript.png",
+      title: "Javascript",
+    },
+    {
+      image: "../assets/laravel.png",
+      title: "Laravel",
+    },
+    {
+      image: "../assets/material-ui.png",
+      title: "Material UI",
+    },
+    {
+      image: "../assets/mongodb.png",
+      title: "MongoDB",
+    },
+    {
+      image: "../assets/mysql.png",
+      title: "MySQL",
+    },
+    {
+      image: "../assets/node.svg",
+      title: "NodeJS",
+    },
+    {
+      image: "../assets/react.png",
+      title: "ReactJS/React-Native",
+    },
+    {
+      image: "../assets/redis.png",
+      title: "Redis",
+    },
+    {
+      image: "../assets/socket-io.svg",
+      title: "SocketIO",
+    },
+    {
+      image: "../assets/swift.png",
+      title: "Swift",
+    },
+    {
+      image: "../assets/twilio.png",
+      title: "Twilio",
+    },
+
+    {
+      image: "../assets/typescript.png",
+      title: "TypeScript",
+    },
+  ];
   return (
     <main className="flex min-h-screen flex-col py-16 items-center px-4 lg:px-0">
       <section className="w-full lg:w-1/2">
@@ -69,14 +169,14 @@ const Landing = () => {
         </div>
         <p id="about" className="mt-4 text-white-light">
           I&apos;m a software developer with a problem solving attitude. I am
-          focused to provide maximum productivity with minimal efforts and open
-          to learning new technologies with changing times.
+          focused to provide maximum productivity with minimal efforts and keen
+          to learn new technologies with changing times.
         </p>
         <hr className="my-4 text-white-light" />
       </section>
+
       <section className="w-full lg:w-1/2">
         <strong className="text-xl lg:text-2xl">My Timeline</strong>
-
         <div className="timeline">
           <ul>
             {experience.map((item, index) => {
@@ -97,6 +197,62 @@ const Landing = () => {
             })}
           </ul>
         </div>
+        <hr className="my-4 text-white-light" />
+      </section>
+
+      <section className="w-full lg:w-1/2">
+        <strong className="text-xl lg:text-2xl">Projects</strong>
+        {/* Projects List */}
+        <div className="showcase w-fit mx-auto grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-8 mt-5 mb-5">
+          {projects.map((item, index) => (
+            <div
+              key={index}
+              className="p-4 cursor-pointer shadow-md rounded-xl duration-500 hover:scale-110 hover:shadow-xl bg-dark-accent"
+            >
+              <div>
+                <h2 className="text-xl font-bold">{item.title}</h2>
+                <p className="mt-2 line-clamp-3">{item.desc}</p>
+                <div className="additional-data mt-2 hidden">
+                  <p>{item.desc}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <hr className="my-4 text-white-light" />
+      </section>
+
+      <section className="w-full lg:w-1/2">
+        <strong className="text-xl lg:text-2xl">Contributions</strong>
+        <div className="showcase w-fit mx-auto grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-8 mt-5 mb-5">
+          {contributions.map((item, index) => {
+            return (
+              <div
+                key={index}
+                className="p-4 cursor-pointer shadow-md rounded-xl duration-500 hover:scale-110 hover:shadow-xl bg-dark-accent"
+              >
+                <div>
+                  <h2 className="text-xl font-bold"> {item.title}</h2>
+                  <p className="mt-2 line-clamp-3">{item.desc}</p>
+                </div>
+                {/* <div className="additional-data mt-2 hidden">
+                  <p>
+                    sdjshdjksjdsda sdjshdjksjdsda sdjshdjksjdsda sdjshdjksjdsda
+                    sdjshdjksjdsda
+                  </p>
+                  <PillButton icon={faLink} title="Pub.dev" />
+                </div> */}
+              </div>
+            );
+          })}
+        </div>
+        <hr className="my-4 text-white-light" />
+      </section>
+
+      <section className="w-full lg:w-1/2">
+        <strong className="text-xl lg:text-2xl">Technologies</strong>
+        <TechnologiesWrapper technologies={technologies} />
+        <hr className="my-4 text-white-light" />
       </section>
     </main>
   );

@@ -131,6 +131,43 @@ li:first-child .point {
 }
 /* TIMELINE END*/
 
+/* List items */
+.showcase > div:hover {
+  background: var(--secondary);
+}
+
+/* .showcase > div:hover .additional-data {
+  display: block;
+} */
+/* .showcase > div:hover .line-clamp-3 {
+  -webkit-line-clamp: unset;
+} */
+
+.technologies-wrapper {
+  background-color: #3f3f46;
+  /* width: 5rem;
+  height: 5rem;
+  border-radius: 50px !important; */
+  width: 100%;
+  height: auto;
+  border-radius: 0.3rem !important;
+}
+/* .technologies-wrapper[data-isOpen="true"] {
+  width: 100%;
+  height: auto;
+  border-radius: 0.3rem !important;
+} */
+.technologies > img {
+  width: auto;
+  max-height: 2rem;
+  transition: transform 0.5s;
+  /* filter: grayscale(1); */
+}
+.technologies :hover {
+  transform: scale(1.5);
+  filter: grayscale(0);
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
