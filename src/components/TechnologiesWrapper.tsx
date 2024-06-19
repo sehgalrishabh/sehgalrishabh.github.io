@@ -37,6 +37,8 @@ const TechnologiesWrapper = ({ technologies }: any) => {
           className="technologies justify-center flex m-3"
         >
           <motion.img
+            height={100}
+            width={100}
             src={typeof tech === "object" ? tech.image : tech}
             alt={typeof tech === "object" ? tech.title : "Technologies Used"}
           />

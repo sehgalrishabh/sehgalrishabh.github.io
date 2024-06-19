@@ -202,60 +202,52 @@ const Landing = () => {
 
       <section className="w-full lg:w-1/2">
         <strong className="text-xl lg:text-2xl">Projects</strong>
-        <div className="flex flex-row">
-          {/* <span className="-ml-[32px] p-[16px] cursor-pointer mt-[68px]">
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </span> */}
-          {/* Projects List */}
-          <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
-            {projects.map((item, index) => (
+        {/* Projects List */}
+        <div className="showcase w-fit mx-auto grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-8 mt-5 mb-5">
+          {projects.map((item, index) => (
+            <div
+              key={index}
+              className="p-4 cursor-pointer shadow-md rounded-xl duration-500 hover:scale-110 hover:shadow-xl bg-dark-accent"
+            >
+              <div>
+                <h2 className="text-xl font-bold">{item.title}</h2>
+                <p className="mt-2 line-clamp-3">{item.desc}</p>
+                <div className="additional-data mt-2 hidden">
+                  <p>{item.desc}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <hr className="my-4 text-white-light" />
+      </section>
+
+      <section className="w-full lg:w-1/2">
+        <strong className="text-xl lg:text-2xl">Contributions</strong>
+        <div className="showcase w-fit mx-auto grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-8 mt-5 mb-5">
+          {contributions.map((item, index) => {
+            return (
               <div
                 key={index}
                 className="p-4 cursor-pointer shadow-md rounded-xl duration-500 hover:scale-110 hover:shadow-xl bg-dark-accent"
               >
                 <div>
-                  <h2 className="text-xl font-bold">{item.title}</h2>
-                  <p className="mt-2 line-clamp-3">{item.desc}</p>
-                  <div className="additional-data mt-2 hidden">
-                    <p>{item.desc}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          {/* <span className="-mr-[32px] p-[16px] cursor-pointer mt-[68px]">
-            <FontAwesomeIcon icon={faChevronRight} />
-          </span> */}
-        </div>
-        <hr className="my-4 text-white-light" />
-      </section>
-
-      {/* <section className="w-full lg:w-1/2">
-        <strong className="text-xl lg:text-2xl">Contributions</strong>
-        <ul className="showcase columns-2">
-          {contributions.map((item, index) => {
-            return (
-              <li
-                key={index}
-                className="p-4 cursor-pointer transition-all duration-300 transform"
-              >
-                <div className="bg-dark-accent rounded-lg shadow-md p-4 h-full overflow-hidden transition-all duration-300">
                   <h2 className="text-xl font-bold"> {item.title}</h2>
                   <p className="mt-2 line-clamp-3">{item.desc}</p>
                 </div>
-                <div className="additional-data mt-2 hidden">
+                {/* <div className="additional-data mt-2 hidden">
                   <p>
                     sdjshdjksjdsda sdjshdjksjdsda sdjshdjksjdsda sdjshdjksjdsda
                     sdjshdjksjdsda
                   </p>
                   <PillButton icon={faLink} title="Pub.dev" />
-                </div>
-              </li>
+                </div> */}
+              </div>
             );
           })}
-        </ul>
+        </div>
         <hr className="my-4 text-white-light" />
-      </section> */}
+      </section>
 
       <section className="w-full lg:w-1/2">
         <strong className="text-xl lg:text-2xl">Technologies</strong>

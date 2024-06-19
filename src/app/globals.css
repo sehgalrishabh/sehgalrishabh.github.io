@@ -132,19 +132,19 @@ li:first-child .point {
 /* TIMELINE END*/
 
 /* List items */
-.showcase > div:hover .bg-dark-accent {
+.showcase > div:hover {
   background: var(--secondary);
 }
 
-.showcase > div:hover .additional-data {
-  display: block; /* Display additional data */
-}
-.showcase > div:hover .line-clamp-3 {
+/* .showcase > div:hover .additional-data {
+  display: block;
+} */
+/* .showcase > div:hover .line-clamp-3 {
   -webkit-line-clamp: unset;
-}
+} */
 
 .technologies-wrapper {
-  background-color: var(--bs-light-grey);
+  background-color: #3f3f46;
   /* width: 5rem;
   height: 5rem;
   border-radius: 50px !important; */
@@ -161,7 +161,7 @@ li:first-child .point {
   width: auto;
   max-height: 2rem;
   transition: transform 0.5s;
-  filter: grayscale(100);
+  /* filter: grayscale(1); */
 }
 .technologies :hover {
   transform: scale(1.5);
