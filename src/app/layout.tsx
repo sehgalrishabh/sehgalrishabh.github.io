@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
-import DotGrid from "@/components/DotGrid";
+import Cursor from "@/components/Cursor";
 config.autoAddCss = false;
 
 export const metadata: Metadata = {
-  title: "Rishabh Sehgal",
-  description: "Mobile Application Expert",
+  title: "Rishabh Sehgal — Mobile Application Expert",
+  description:
+    "Senior Mobile Application Developer specialising in React Native, Flutter, and cross-platform apps. 5+ years building products used by millions.",
 };
 
 export default function RootLayout({
@@ -18,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-kode">
-        <DotGrid />
+        <Cursor />
         {children}
       </body>
     </html>

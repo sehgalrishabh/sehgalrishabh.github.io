@@ -1,14 +1,20 @@
 [
   {
     "title": "DrOrtho",
-    "desc": "Dr. Ortho offers an extensive line of products in Ayurvedic and Orthotic Range in the pain care segment. Dr. Ortho official app is your trusted partner in joint care. Delighted to offer you a holistic solution for joint pain relief, inspired by the principles of Ayurveda. As one of Asia's leading brands in joint care, Dr. Ortho is committed to provide their valued consumers with natural and effective remedies to alleviate joint discomfort."
+    "category": "Healthcare · React Native",
+    "desc": "Official mobile app for Asia's leading joint care brand. Built with React Native, featuring Ayurvedic product catalog, personalized pain relief recommendations, expert consultation booking, and real-time order tracking.",
+    "tech": ["React Native", "Redux", "Firebase", "Node.js"]
   },
   {
     "title": "DubaiLocal",
-    "desc": "Dr. Ortho offers an extensive line of products in Ayurvedic and Orthotic Range in the pain care segment. Dr. Ortho official app is your trusted partner in joint care. Delighted to offer you a holistic solution for joint pain relief, inspired by the principles of Ayurveda. As one of Asia's leading brands in joint care, Dr. Ortho is committed to provide their valued consumers with natural and effective remedies to alleviate joint discomfort."
+    "category": "Marketplace · React Native",
+    "desc": "Hyperlocal services marketplace connecting Dubai residents with trusted local professionals. Features real-time booking, GPS-based provider matching, in-app chat, and secure payment integration.",
+    "tech": ["React Native", "Socket.IO", "Google Maps", "Stripe"]
   },
   {
     "title": "Edureka",
-    "desc": "Dr. Ortho offers an extensive line of products in Ayurvedic and Orthotic Range in the pain care segment. Dr. Ortho official app is your trusted partner in joint care. Delighted to offer you a holistic solution for joint pain relief, inspired by the principles of Ayurveda. As one of Asia's leading brands in joint care, Dr. Ortho is committed to provide their valued consumers with natural and effective remedies to alleviate joint discomfort."
+    "category": "EdTech · React Native",
+    "desc": "Mobile learning platform for one of India's largest online education providers. Delivers live classes, on-demand video content, progress tracking, certifications, and instructor interaction at scale.",
+    "tech": ["React Native", "AWS", "WebRTC", "GraphQL"]
   }
 ]

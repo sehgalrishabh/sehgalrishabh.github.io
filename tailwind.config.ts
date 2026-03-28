@@ -1,14 +1,13 @@
 import type { Config } from "tailwindcss";
 
-const Colors = {
+// Named export kept for DotGrid/constants.tsx compatibility
+export const Colors = {
   primary: "#10CA8B",
   secondary: "#2F4858",
-  "dark-accent": "#3F3F46",
+  "dark-accent": "#1a1a1a",
   "white-light": "#D4D4D8",
   "inactive-dots-color": "rgba(255,255,255,0.1)",
 };
-
-export { Colors };
 
 const config: Config = {
   content: [
@@ -17,19 +16,27 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    colors: {
-      primary: Colors.primary,
-      secondary: Colors.secondary,
-      "dark-accent": Colors["dark-accent"],
-      "white-light": Colors["white-light"],
-      "inactive-dots-color": Colors["inactive-dots-color"],
-    },
     extend: {
+      colors: {
+        primary: "#10CA8B",
+        secondary: "#2F4858",
+        "dark-accent": "#1a1a1a",
+        "surface": "#111111",
+        "bg": "#0a0a0a",
+        "white-light": "#D4D4D8",
+        "muted": "#6b6b6b",
+        "inactive-dots-color": "rgba(255,255,255,0.1)",
+      },
       fontFamily: {
         kode: ["Kode Mono", "monospace"],
+      },
+      fontSize: {
+        "display": ["clamp(3.5rem, 9vw, 9rem)", { lineHeight: "0.95" }],
+        "display-md": ["clamp(2.5rem, 5vw, 5rem)", { lineHeight: "1.05" }],
       },
     },
   },
   plugins: [],
 };
+
 export default config;
